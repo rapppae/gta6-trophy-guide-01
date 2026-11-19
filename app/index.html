@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LEONIDA — GTA VI Trophy Guide &amp; Tracker</title>
+<meta name="description" content="The best offline guide and tracker for the 55 PlayStation 5 trophies of Grand Theft Auto VI. Roadmap to the platinum, missable flags, cited guides, progress saved in your browser.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top">
+  <div class="top-inner">
+    <div class="brand">
+      <div class="brand-mark">VI</div>
+      <div>
+        <h1>LEONIDA</h1>
+        <p class="subtitle">GTA VI Trophy Guide &amp; Tracker &middot; PlayStation 5 &middot; 55 trophies</p>
+      </div>
+    </div>
+    <div class="progress-wrap">
+      <div class="progress-numbers"><span id="earnedCount">0</span> / 55 earned &middot; <span id="progressPct">0%</span></div>
+      <div class="progress-bar"><div id="progressFill" class="progress-fill"></div></div>
+      <div class="progress-sub"><span id="platinumNote">Platinum locked — earn the other 54 first.</span></div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="panel" id="roadmapPanel">
+    <h2>Roadmap to the Platinum</h2>
+    <p class="panel-intro">Six stages, in order. Finish the story first — most missables live there — then sweep the side content, activities and collectibles before the final cleanup.</p>
+    <ol id="roadmap" class="roadmap"></ol>
+    <p class="roadmap-note">Missable trophies are flagged <span class="tag tag-missable">MISSABLE</span> in the list below. Do those when the moment comes: some can be retried with mission replay, others are one-time choices or events.</p>
+  </section>
+
+  <section class="panel controls" id="controlsPanel">
+    <div class="control-row">
+      <input id="search" type="search" placeholder="Search a trophy, mission or keyword…" aria-label="Search trophies">
+      <select id="kindFilter" aria-label="Filter by kind">
+        <option value="all">All kinds</option>
+        <option value="story">Story</option>
+        <option value="missable">Missable</option>
+        <option value="collectibles">Collectibles</option>
+        <option value="activities">Activities</option>
+        <option value="online">Online</option>
+      </select>
+      <select id="gradeFilter" aria-label="Filter by grade">
+        <option value="all">All grades</option>
+        <option value="platinum">Platinum</option>
+        <option value="gold">Gold</option>
+        <option value="silver">Silver</option>
+        <option value="bronze">Bronze</option>
+      </select>
+      <select id="statusFilter" aria-label="Filter by status">
+        <option value="all">Earned + unearned</option>
+        <option value="earned">Earned only</option>
+        <option value="unearned">Unearned only</option>
+      </select>
+    </div>
+    <div class="control-row">
+      <label class="toggle"><input type="checkbox" id="spoilerToggle"> <span>Spoiler-safe: hide story trophy names &amp; descriptions until earned</span></label>
+      <span class="spacer"></span>
+      <button id="exportBtn" type="button">Export progress</button>
+      <button id="importBtn" type="button">Import progress</button>
+      <input id="importFile" type="file" accept="application/json,.json" hidden>
+      <button id="resetBtn" type="button" class="danger">Reset</button>
+    </div>
+    <div id="countLine" class="count-line"></div>
+  </section>
+
+  <section id="trophyList" class="trophy-list" aria-live="polite"></section>
+
+  <section class="panel" id="sourcesPanel">
+    <h2>Sources &amp; how this guide was built</h2>
+    <p>Trophy names, descriptions and grades are the official PlayStation 5 list as published by Exophase and PSNProfiles, who agree on every name, description and grade. Each guide below is written in our own words from the official description and cites its sources beside it — a source is cited, never copied. The game had not released when this guide was written, so where a method depends on a place or step the description does not name, the guide says so and points at the description instead of inventing a location.</p>
+    <p>No Rockstar Games logo, artwork or game screenshot is used here. The look is our own.</p>
+  </section>
+</main>
+
+<div id="detailModal" class="modal" hidden>
+  <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="detailTitle">
+    <button id="detailClose" type="button" class="modal-close" aria-label="Close">✕</button>
+    <div id="detailBody"></div>
+  </div>
+</div>
+
+<footer>
+  <p>LEONIDA is a fan-made guide. Grand Theft Auto and GTA are trademarks of Rockstar Games. Not affiliated with Rockstar Games or PlayStation.</p>
+</footer>
+
+<script type="module" src="app.js"></script>
+</body>
+</html>
