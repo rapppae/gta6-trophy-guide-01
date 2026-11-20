@@ -1,53 +1,54 @@
-// Hand-in script for the GTA 6 trophy guide entry (Node 22, no dependencies).
-// Copies app/ and screenshots/ next to this file into the output directory,
-// then builds the make.fun dossier for that directory and writes dossier.json.
+// Hand-in builder for the GTA 6 trophy guide entry.
+//
+// What it does, in plain terms: it takes the finished guide in app/ and the
+// screenshots in screenshots/, copies both into the output folder, and asks
+// the vendored make.fun library to summarise the whole entry as dossier.json.
+// The output folder comes from MAKEFUN_OUTPUT_DIR, or /output when that is
+// not set (the grader's container sets it). Run it like this:
 //
 //   mkdir -p out && MAKEFUN_OUTPUT_DIR=out node main.ts
 //
-// Outside the grader's container MAKEFUN_OUTPUT_DIR stands in for /output.
-import { buildDossier } from './vendor/makefun-frontend.ts';
-import { cpSync, existsSync, mkdirSync, readdirSync, rmSync, statSync, writeFileSync } from 'node:fs';
-import { join, resolve } from 'node:path';
-import { fileURLToPath } from 'node:url';
+// Node 22, standard library only, no build step. The vendor library is used
+// exactly as shipped in vendor/ and is never edited here.
 
-const here = resolve(fileURLToPath(new URL('.', import.meta.url)));
-const out = resolve(process.env.MAKEFUN_OUTPUT_DIR ?? '/output');
+import { cpSync, existsSync, mkdirSync, readdirSync, statSync, writeFileSync } from "node:fs";
+import { join } from "node:path";
+import { fileURLToPath } from "node:url";
+import { buildDossier } from "./vendor/makefun-frontend.ts";
 
-const caps = {
+const repoRoot = fileURLToPath(new URL(".", import.meta.url));
+const outputDir = process.env.MAKEFUN_OUTPUT_DIR ?? "/output";
+const appDir = join(repoRoot, "app");
+const shotsDir = join(repoRoot, "screenshots");
+
+function fail(message: string): never {
+  throw new Error(`gta6-trophy-guide-01 hand-in failed: ${message}`);
+}
+
+// Sanity checks with readable errors, so a broken hand-in says what is wrong
+// instead of dying deep inside the dossier builder.
+if (!existsSync(appDir) || !statSync(appDir).isDirectory()) fail("app/ is missing from the repo");
+if (!existsSync(join(appDir, "index.html"))) fail("app/index.html is missing");
+if (!existsSync(join(appDir, "data", "trophies.json"))) fail("app/data/trophies.json is missing");
+if (!existsSync(shotsDir) || readdirSync(shotsDir).filter((f) => /\.(png|jpe?g)$/i.test(f)).length === 0) {
+  fail("screenshots/ has no PNG or JPEG files");
+}
+for (const shot of readdirSync(shotsDir).filter((f) => /\.(png|jpe?g)$/i.test(f))) {
+  const size = statSync(join(shotsDir, shot)).size;
+  if (size > 262144) fail(`screenshots/${shot} is ${size} bytes, over the 256 KiB cap`);
+}
+
+mkdirSync(outputDir, { recursive: true });
+cpSync(appDir, join(outputDir, "app"), { recursive: true });
+mkdirSync(join(outputDir, "screenshots"), { recursive: true });
+cpSync(shotsDir, join(outputDir, "screenshots"), { recursive: true });
+
+const dossier = buildDossier(outputDir, {
   text_max_bytes: 163840,
   screenshots: { max: 4, max_bytes: 262144 },
   app_max_files: 993,
   app_max_bytes: 50331648,
-};
+});
+writeFileSync(join(outputDir, "dossier.json"), dossier);
 
-function fail(message: string): never {
-  console.error(`main.ts: ${message}`);
-  process.exit(1);
-}
-
-if (!existsSync(join(here, 'app', 'index.html'))) fail('app/index.html is missing, nothing to hand in');
-if (!existsSync(join(here, 'app', 'data', 'trophies.json'))) fail('app/data/trophies.json is missing, nothing to hand in');
-const shots = existsSync(join(here, 'screenshots'))
-  ? readdirSync(join(here, 'screenshots')).filter((f) => /\.(png|jpe?g|webp)$/i.test(f))
-  : [];
-if (shots.length === 0) fail('screenshots/ holds no image: take the screenshots first (see shots.json), the first is the cover');
-
-mkdirSync(out, { recursive: true });
-for (const name of ['app', 'screenshots']) {
-  const target = join(out, name);
-  rmSync(target, { recursive: true, force: true });
-  cpSync(join(here, name), target, { recursive: true });
-}
-
-const dossier = buildDossier(out, caps);
-if (!dossier || dossier.length === 0) fail('buildDossier returned an empty dossier');
-try {
-  const parsed = JSON.parse(new TextDecoder().decode(dossier));
-  if (!parsed || typeof parsed !== 'object') fail('buildDossier returned bytes that are not a JSON object');
-} catch {
-  fail('buildDossier returned bytes that are not valid JSON');
-}
-writeFileSync(join(out, 'dossier.json'), dossier);
-
-const appFiles = statSync(join(out, 'app')).isDirectory() ? 'ok' : 'missing';
-console.log(`main.ts: wrote ${join(out, 'dossier.json')} (${dossier.length} bytes), app/ ${appFiles}`);
+console.log(`Hand-in written to ${outputDir} (${dossier.length} bytes of dossier).`);

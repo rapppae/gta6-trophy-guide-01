@@ -3,100 +3,80 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>GTA 6 Trophy Guide &amp; Tracker — Leonida Platinum Path</title>
-<meta name="description" content="Offline guide and tracker for all 55 GTA 6 PS5 trophies: roadmap to platinum, missable flags, cited guides, spoiler-safe mode.">
+<title>Leonida Platinum Path — GTA 6 Trophy Guide &amp; Tracker</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <header class="hero">
-  <p class="kicker">Grand Theft Auto VI &middot; PlayStation 5 &middot; 55 trophies</p>
   <h1>Leonida Platinum Path</h1>
-  <p class="sub">Every GTA 6 trophy, in one offline guide and tracker. One platinum, two gold, six silver, 46 bronze &mdash; 28 of them hidden until you earn them. About 200 hours, one playthrough, no online trophies.</p>
-  <div class="progress" id="progress" aria-live="polite">
-    <div class="bar"><div class="fill" id="progressFill" style="width:0%"></div></div>
-    <p id="progressText">Loading trophies&hellip;</p>
-  </div>
+  <p>A complete offline guide and tracker for all 55 GTA 6 trophies on PS5: 1 platinum, 2 gold, 6 silver, 46 bronze — 28 of them hidden. Guides are written in my own words and cite their sources. Nothing here loads from the network.</p>
+  <p>PowerPyx rates the set 4/10, about 200 hours, one playthrough, no online trophies. Hardest: A Long Road (100% completion). Only possibly missable: Positive Mental Attitude.</p>
 </header>
-
 <main>
-  <section class="panel" id="roadmapPanel" aria-labelledby="roadmapHeading">
-    <h2 id="roadmapHeading">Roadmap to the platinum</h2>
-    <p class="note">Six stages, in the order that wastes the least time. Stage 1 holds the only trophy that can be missed: do the Chapter 1 meditation the morning Lucia invites you, before the chapter ends.</p>
-    <ol class="roadmap" id="roadmap"></ol>
+  <section class="progress-wrap" aria-label="Progress">
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <p class="progress-text" id="progressText">Loading trophies…</p>
   </section>
 
-  <section class="panel controls" aria-label="Tracker controls">
-    <div class="row">
-      <label>Search <input id="search" type="search" placeholder="Trophy name or mission&hellip;" autocomplete="off"></label>
-      <label>Kind
-        <select id="kindFilter">
-          <option value="all">All kinds</option>
-          <option value="story">Story</option>
-          <option value="strangers">Strangers</option>
-          <option value="activities">Activities</option>
-          <option value="collectibles">Collectibles</option>
-          <option value="crime">Crime</option>
-          <option value="exploration">Exploration</option>
-          <option value="misc">Miscellaneous</option>
-        </select>
-      </label>
-      <label>Grade
-        <select id="gradeFilter">
-          <option value="all">All grades</option>
-          <option value="platinum">Platinum</option>
-          <option value="gold">Gold</option>
-          <option value="silver">Silver</option>
-          <option value="bronze">Bronze</option>
-        </select>
-      </label>
-      <label>Status
-        <select id="statusFilter">
-          <option value="all">All</option>
-          <option value="earned">Earned</option>
-          <option value="unearned">Not earned yet</option>
-        </select>
-      </label>
-      <label class="check"><input id="missableOnly" type="checkbox"> Missable only</label>
-      <label class="check"><input id="spoilerToggle" type="checkbox"> Spoiler-safe mode</label>
-    </div>
-    <div class="row">
-      <button id="exportBtn" type="button">Export progress</button>
-      <button id="importBtn" type="button">Import progress</button>
-      <input id="importFile" type="file" accept="application/json,.json" hidden>
-      <button id="resetBtn" type="button">Reset checklist</button>
-      <span class="count" id="shownCount"></span>
-    </div>
-    <p class="note" id="spoilerNote" hidden>Spoiler-safe mode is on: story trophies you have not earned yet show as hidden, with no name or description, until you earn them.</p>
+  <section class="toolbar" aria-label="Tracker controls">
+    <label>Search <input type="search" id="searchBox" placeholder="trophy name…"></label>
+    <label>Kind
+      <select id="kindFilter">
+        <option value="all">All kinds</option>
+        <option value="story">Story</option>
+        <option value="activities">Activities</option>
+        <option value="collectibles">Collectibles</option>
+        <option value="crime">Crime</option>
+        <option value="misc">Misc</option>
+        <option value="online">Online</option>
+      </select>
+    </label>
+    <label>Grade
+      <select id="gradeFilter">
+        <option value="all">All grades</option>
+        <option value="platinum">Platinum</option>
+        <option value="gold">Gold</option>
+        <option value="silver">Silver</option>
+        <option value="bronze">Bronze</option>
+      </select>
+    </label>
+    <label>Status
+      <select id="statusFilter">
+        <option value="all">All</option>
+        <option value="earned">Earned</option>
+        <option value="unearned">Not earned</option>
+        <option value="missable">Missable only</option>
+      </select>
+    </label>
+    <label><input type="checkbox" id="spoilerToggle"> Spoiler-safe: hide unearned story trophies</label>
+    <button id="exportBtn" type="button">Export progress</button>
+    <button id="importBtn" type="button" class="ghost">Import progress</button>
+    <input type="file" id="importFile" accept="application/json" hidden>
   </section>
 
-  <section class="panel" aria-labelledby="listHeading">
-    <h2 id="listHeading">Trophy checklist</h2>
-    <p class="note">Tick a trophy when it pops. Progress is saved in this browser only. Open a trophy to read its guide and sources.</p>
-    <ul class="trophies" id="trophyList"></ul>
+  <section class="roadmap" aria-label="Roadmap to the platinum">
+    <h2>Roadmap to the platinum — six stages</h2>
+    <ol>
+      <li><strong>Stage 1 — Story, Chapters 1–2.</strong> Play the story and enjoy it. Meditate at Jason's house in Chapter 1 before that spot is gone — the one missable trophy. Scan vehicles and study animals through the binoculars as you travel.</li>
+      <li><strong>Stage 2 — Story, Chapters 3–5.</strong> Finish the story, do stranger strands and side missions as they appear, and switch between Jason and Lucia for character-only content.</li>
+      <li><strong>Stage 3 — 100% completion checklist.</strong> After the story, open Progress &gt; Stats &gt; 100% Completion: 70 of 80 challenges, 250 stunts, every robbery, underwater discovery, shooting range and drone race.</li>
+      <li><strong>Stage 4 — Strangers &amp; Freaks.</strong> Complete the eight stranger strands and the final missions for Andy, Kenton, Billy, Randy and Tyrone.</li>
+      <li><strong>Stage 5 — Collectibles and exploration.</strong> Three card sets, 100 WAiNK spots, 100 vehicles discovered, every meditation spot, all of Leonida explored.</li>
+      <li><strong>Stage 6 — Cleanup.</strong> Partner and crime trophies, the money trophies, and whatever is left, until Vice Got a Price! pops.</li>
+    </ol>
+    <p>Cheats disable trophies and saving, so play clean. Save by hand at the start and end of every chapter — there is no mission replay.</p>
   </section>
 
-  <section class="panel guide" id="guidePanel" aria-labelledby="guideHeading" hidden>
-    <h2 id="guideHeading">Guide</h2>
-    <div id="guideBody"></div>
-    <button id="guideClose" type="button">Close guide</button>
+  <section aria-label="Trophy list">
+    <h2>All 55 trophies</h2>
+    <p id="countLine"></p>
+    <div id="trophyList"></div>
   </section>
 
-  <section class="panel" aria-labelledby="factsHeading">
-    <h2 id="factsHeading">Facts that shape the plan</h2>
-    <ul class="facts">
-      <li><strong>200 hours, 4/10.</strong> PowerPyx rates the platinum 4 out of 10 and about 200 hours; the story alone takes 60&ndash;80 hours.</li>
-      <li><strong>One playthrough.</strong> No online trophies, no mission gold medals, no New Game+. Free-roam continues after the story, but there is no mission replay, so keep manual saves at the start and end of each chapter.</li>
-      <li><strong>100% is lenient.</strong> A Long Road needs the completion checklist under Progress &gt; Stats &gt; 100% Completion: 300 of 397 stunts, 70 of 80 challenges, 200 of 277 vehicles scanned, 100 of 255 animals studied. Individual trophies ask for less than the checklist does.</li>
-      <li><strong>Cheats disable trophies</strong> and saving. Leave them off for the whole run.</li>
-      <li><strong>Sources.</strong> Every trophy names its sources in its guide. Names and descriptions are shown as published; the guides themselves are written in my own words.</li>
-    </ul>
-  </section>
+  <footer>
+    <p>Sources: PowerPyx, games.gg, EGamers, PushSquare and gta-zone — each trophy names its own sources. Official names and descriptions are shown as PlayStation publishes them. No Rockstar artwork is used; this look is my own.</p>
+  </footer>
 </main>
-
-<footer>
-  <p>Leonida Platinum Path &mdash; an unofficial fan guide. Grand Theft Auto and GTA are trademarks of Take-Two Interactive; this guide uses no Rockstar artwork or logos. Built for make.fun&rsquo;s GTA 6 trophy guide bounty.</p>
-</footer>
-
 <script src="app.js"></script>
 </body>
 </html>

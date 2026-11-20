@@ -1,2 +1,4 @@
 out/
 node_modules/
+# my own throwaway experiment folders never belong in this repo
+scratch/
