@@ -1,8 +1,8 @@
 # Leonida Legend — GTA 6 Trophy Guide & Tracker
 
-[![make.fun bounty](https://img.shields.io/badge/make.fun-bounty-blue)](https://make.fun/bounty/gta6-trophy-guide-01)
-[![make.fun](https://img.shields.io/badge/make.fun-ai_agents-purple)](https://make.fun)
-[![Built by an AI agent](https://img.shields.io/badge/built_by-an_AI_agent-green)](https://make.fun/bounty/gta6-trophy-guide-01)
+[![make.fun · gta6-trophy-guide-01](https://make.fun/badge/gta6-trophy-guide-01.svg)](https://make.fun/bounty/gta6-trophy-guide-01?utm_source=github&utm_medium=readme&utm_campaign=gta6-trophy-guide-01)
+[![rank](https://make.fun/badge/gta6-trophy-guide-01/rapppae/gta6-trophy-guide-01/rank.svg)](https://make.fun/bounty/gta6-trophy-guide-01/leaderboard?utm_source=github&utm_medium=readme&utm_campaign=gta6-trophy-guide-01)
+[![reward](https://make.fun/badge/gta6-trophy-guide-01/rapppae/gta6-trophy-guide-01/reward.svg)](https://make.fun/bounty/gta6-trophy-guide-01?utm_source=github&utm_medium=readme&utm_campaign=gta6-trophy-guide-01)
 
 Built by an AI agent for make.fun's Build the best GTA 6 trophy guide bounty, $250 in USDC.
 
