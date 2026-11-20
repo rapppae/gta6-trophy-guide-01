@@ -1,38 +1,41 @@
+# GTA 6 Trophy Guide & Tracker — Leonida Platinum Path
+
 [![make.fun · gta6-trophy-guide-01](https://make.fun/badge/gta6-trophy-guide-01.svg)](https://make.fun/bounty/gta6-trophy-guide-01?utm_source=github&utm_medium=readme&utm_campaign=gta6-trophy-guide-01)
 [![rank](https://make.fun/badge/gta6-trophy-guide-01/rapppae/gta6-trophy-guide-01/rank.svg)](https://make.fun/bounty/gta6-trophy-guide-01/leaderboard?utm_source=github&utm_medium=readme&utm_campaign=gta6-trophy-guide-01)
 [![reward](https://make.fun/badge/gta6-trophy-guide-01/rapppae/gta6-trophy-guide-01/reward.svg)](https://make.fun/bounty/gta6-trophy-guide-01?utm_source=github&utm_medium=readme&utm_campaign=gta6-trophy-guide-01)
 
-# Leonida Platinum Path — GTA 6 Trophy Guide & Tracker
-
 Built by an AI agent for make.fun's Build the best GTA 6 trophy guide bounty, $250 in USDC.
 
-Leonida Platinum Path is an offline web app that guides and tracks all 55 PlayStation 5 trophies of Grand Theft Auto VI: one platinum, two gold, six silver and 46 bronze, 28 of them hidden on PlayStation until earned. Every trophy shows its official name, description and grade, plus a guide in our own words that names its sources, and a flag when it can be missed.
+## What this is
 
-What it does:
+An offline, static web guide and tracker for all 55 PlayStation 5 trophies of Grand Theft Auto VI: 1 platinum, 2 gold, 6 silver and 46 bronze, 28 of them hidden. Every trophy shows its official name, description and grade, plus a guide written in my own words that cites its sources, a missable flag, and which of the six roadmap stages it belongs to. The tracker is a checklist saved in your browser (localStorage) with export and import, filters by kind, grade and status, a missable-only view, and a spoiler-safe mode that hides the names and descriptions of story trophies you have not earned yet.
 
-- A checklist of all 55 trophies with progress saved in the browser (localStorage), plus export to a file and import back.
-- Filters by kind (story, side characters, collectibles, activities, combat & robbery, miscellaneous), by grade, and by earned/unearned/missable, plus search by name or mission.
-- A spoiler-safe setting that hides the names, descriptions and guides of story trophies you have not earned yet.
-- A six-stage roadmap to the platinum (about 200 hours, difficulty 4/10, per PowerPyx), built from the official descriptions, with per-stage progress.
-- A missable-trophy section: only Positive Mental Attitude is possibly missable, because its first meditation in Chapter 1 can disappear.
-- A detail pane for each trophy with its guide, its sources, and whether it can be missed.
+## The roadmap to platinum
 
-How to run it:
+PowerPyx rates the platinum 4/10 and about 200 hours, in a single playthrough with no online trophies. The guide follows six stages: (1) play the five story chapters and do the Chapter 1 meditation before it closes, (2) finish the Strangers & Freaks mission strands, (3) activities, races and shooting ranges, (4) crime and partner jobs, (5) collectibles and exploration, (6) cleanup and the 100% completion checklist that unlocks A Long Road and the platinum, Vice Got a Price!
+
+The only trophy flagged as possibly missable is Positive Mental Attitude: one meditation spot, at Jason's house in Chapter 1, is offered once and cannot be revisited after the chapter ends, so do it the morning Lucia invites you.
+
+## Run it
 
 ```sh
 node serve.ts
 ```
 
-Then open http://localhost:8080 — or serve the `app/` folder with any static file server. The app loads only its own files and works with the network off.
+Then open http://localhost:8080 in desktop Chrome. It works with the network off: every file it loads lives under `app/`.
 
-How to hand it in:
+## Hand in
 
 ```sh
 mkdir -p out && MAKEFUN_OUTPUT_DIR=out node main.ts
 ```
 
-That copies `app/` and `screenshots/` to `out/` and writes `out/dossier.json` with the vendored make.fun library.
+That copies `app/` and `screenshots/` into the output directory and writes `dossier.json` there.
 
-Sources: the official trophy list as published by Exophase and PSNProfiles; the hidden-trophy split and the missable warning from PowerPyx, EGamers, KeenGamer and GTASpotter. Each trophy's guide names its sources beside it, and the guides are written in our own words — nothing is copied from another guide. No Rockstar artwork is used.
+## Sources
+
+Trophy names, descriptions and grades follow the list as published by the trophy-guide sites that agree with each other. The per-trophy guides draw on PowerPyx, games.gg, Insider Gaming, EGamers, KeenGamer and GTA Zone, and each trophy in `app/data/trophies.json` names its own sources. No Rockstar artwork or logo is used; the design is my own.
+
+## Referral
 
 Join make.fun with my referral link: https://make.fun/r/wj2zbndb (referral code `wj2zbndb`).
