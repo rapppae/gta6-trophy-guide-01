@@ -1,94 +1,86 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Leonida Legend — GTA 6 Trophy Guide &amp; Tracker</title>
+<title>Leonida Platinum Path — GTA 6 Trophy Guide &amp; Tracker</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<header class="top" id="top">
-  <p class="kicker" id="kicker">Grand Theft Auto VI · PlayStation 5 · Offline guide</p>
-  <h1 id="title">Leonida Legend</h1>
-  <p class="sub" id="subtitle">Every one of the 55 official trophies, with its own guide and sources, a saved checklist, and a six-stage road to the platinum.</p>
-  <p class="totals" id="totals">55 trophies · 1 platinum · 2 gold · 6 silver · 46 bronze · 28 hidden · 0 online · about 200 hours to platinum</p>
+<header class="top">
+  <p class="eyebrow">Grand Theft Auto VI &middot; PlayStation 5 &middot; offline guide</p>
+  <h1>Leonida Platinum Path</h1>
+  <p class="sub">All 55 trophies, one checklist. Tick them off as you earn them — your progress stays in this browser, and the guide works with the network off.</p>
+  <div class="progress" id="progressBox" aria-live="polite">
+    <div class="progress-text"><strong id="earnedCount">0 / 55</strong> trophies earned <span id="platinumNote">— 54 to go before the platinum pops.</span></div>
+    <div class="bar"><div class="fill" id="progressFill" style="width:0%"></div></div>
+    <div class="grade-counts" id="gradeCounts"></div>
+  </div>
+  <div class="toolbar">
+    <label class="search">Search <input id="searchBox" type="search" placeholder="Trophy name or mission…" autocomplete="off"></label>
+    <label>Kind
+      <select id="kindFilter">
+        <option value="all">All kinds</option>
+        <option value="story">Story</option>
+        <option value="side">Side characters</option>
+        <option value="collectible">Collectibles</option>
+        <option value="activity">Activities</option>
+        <option value="combat">Combat &amp; robbery</option>
+        <option value="misc">Miscellaneous</option>
+      </select>
+    </label>
+    <label>Grade
+      <select id="gradeFilter">
+        <option value="all">All grades</option>
+        <option value="platinum">Platinum</option>
+        <option value="gold">Gold</option>
+        <option value="silver">Silver</option>
+        <option value="bronze">Bronze</option>
+      </select>
+    </label>
+    <label>Status
+      <select id="statusFilter">
+        <option value="all">Earned + unearned</option>
+        <option value="earned">Earned only</option>
+        <option value="unearned">Unearned only</option>
+        <option value="missable">Missable only</option>
+      </select>
+    </label>
+    <label class="check"><input type="checkbox" id="spoilerToggle"> Spoiler-safe: hide unearnt story trophies</label>
+    <button id="exportBtn" type="button">Export progress</button>
+    <button id="importBtn" type="button">Import progress</button>
+    <input id="importFile" type="file" accept=".json,application/json" hidden>
+    <button id="resetBtn" type="button">Reset</button>
+  </div>
 </header>
 
 <main>
-  <section class="progress" id="progress" aria-label="Progress">
-    <div class="bar" id="progressBar"><span id="progressFill"></span></div>
-    <p class="count" id="progressText">0 of 55 earned · 0%</p>
-    <p class="countline" id="gradeCounts"></p>
-  </section>
-
-  <section class="warn" id="missableWarning">
-    <strong>Watch out in Chapter 1:</strong> Positive Mental Attitude is the only trophy that can be missed. After the mission Down to Earth, talk to Lucia in the kitchen in the morning, follow her to the balcony at Jason's house and accept her meditation lesson. Do it before Chapter 1 ends.
-  </section>
-
-  <section class="roadmap" id="roadmap" aria-label="Roadmap to the platinum">
-    <h2>Road to the platinum — 6 stages</h2>
-    <p class="roadnote">Built from the official descriptions. One playthrough is enough, and there is no mission replay, so keep a save at the start and end of each chapter. Cheats disable trophies.</p>
+  <section class="roadmap" id="roadmap" aria-labelledby="roadmapTitle">
+    <h2 id="roadmapTitle">Roadmap to the platinum — about 200 hours, difficulty 4/10</h2>
+    <p class="roadmap-note">Built from the official descriptions. One playthrough is enough, there are no online trophies, and cheats disable trophies and saving — leave them off. There is no mission replay, so save manually at the start and end of every chapter. Only one trophy is possibly missable: <strong>Positive Mental Attitude</strong>.</p>
     <ol class="stages" id="stageList"></ol>
   </section>
 
-  <section class="controls" id="controls" aria-label="Tracker controls">
-    <label class="search">Search <input id="searchBox" type="search" placeholder="Type a trophy name or mission…" autocomplete="off"></label>
-    <div class="filters" id="kindFilters" role="group" aria-label="Filter by kind">
-      <button type="button" data-kind="all" class="on">All 55</button>
-      <button type="button" data-kind="story">Story</button>
-      <button type="button" data-kind="missable">Missable</button>
-      <button type="button" data-kind="collectibles">Collectibles</button>
-      <button type="button" data-kind="activities">Activities</button>
-      <button type="button" data-kind="side">Side quests</button>
-    </div>
-    <div class="pickers">
-      <label>Grade
-        <select id="gradeFilter">
-          <option value="all">All grades</option>
-          <option value="platinum">Platinum</option>
-          <option value="gold">Gold</option>
-          <option value="silver">Silver</option>
-          <option value="bronze">Bronze</option>
-        </select>
-      </label>
-      <label>Status
-        <select id="statusFilter">
-          <option value="all">Earned + not earned</option>
-          <option value="earned">Earned only</option>
-          <option value="todo">Not earned only</option>
-        </select>
-      </label>
-      <label class="spoiler">Spoiler-safe
-        <input id="spoilerToggle" type="checkbox">
-        <span>Hide story trophies until earned</span>
-      </label>
-    </div>
-    <div class="actions">
-      <button type="button" id="exportBtn">Export progress</button>
-      <button type="button" id="importBtn">Import progress</button>
-      <input id="importFile" type="file" accept="application/json,.json" hidden>
-      <button type="button" id="resetBtn">Reset all</button>
-    </div>
-    <p class="saveNote" id="saveNote">Progress is saved in this browser as you tick trophies off.</p>
+  <div class="layout">
+    <section class="list" aria-labelledby="listTitle">
+      <h2 id="listTitle">Trophy checklist <span id="shownCount"></span></h2>
+      <p class="hint">Click a trophy to open its guide and sources. Hidden trophies are marked; with spoiler-safe on, unearnt story trophies show as “Hidden story trophy” until you earn them.</p>
+      <ul id="trophyList"></ul>
+    </section>
+    <aside class="detail" id="detailPane" aria-live="polite">
+      <p class="detail-empty">Pick a trophy from the checklist to read its guide, its sources, and when it can be missed.</p>
+    </aside>
+  </div>
+
+  <section class="missable" id="missableBox" aria-labelledby="missableTitle">
+    <h2 id="missableTitle">Missable trophies</h2>
+    <p><strong>Positive Mental Attitude</strong> (bronze) is the only trophy the guides flag as possibly missable. The first meditation is Lucia&rsquo;s on the balcony at Jason&rsquo;s house in Chapter 1, offered after the mission <em>Down to Earth</em>: follow her and accept. It disappears once Chapter 1 ends, and it is unconfirmed whether it counts toward the 18 spots — do it anyway. Everything else can be finished in free-roam after the story. Stranger mission chains can have windows tied to story progress, so start each one as soon as it appears.</p>
   </section>
 
-  <section class="list" id="list" aria-label="Trophy checklist">
-    <p class="listHead" id="listHead"></p>
-    <ul class="trophies" id="trophyList"></ul>
-    <p class="empty" id="emptyNote" hidden>No trophies match these filters. Clear the search or pick another kind.</p>
-  </section>
-
-  <section class="about" id="about">
-    <h2>How this guide is written</h2>
-    <p>Names, descriptions and grades are shown exactly as PlayStation publishes them. Each guide is written in our own words from the official description plus the cited sources, and says where its facts come from — a guide with no source earns no credit here. The one number to trust above all others is the missable warning at the top: everything else can be cleaned up in free-roam after the story.</p>
-    <p>Sources used for the guides: the PowerPyx trophy guide and roadmap, the Exophase trophy list, PSNProfiles, the KeenGamer roadmap, the games.gg hidden-trophy list, the EGamers trophy list, and Mobalytics. Each trophy names its own sources beside its guide.</p>
-  </section>
+  <footer>
+    <p>Names, descriptions and grades are PlayStation&rsquo;s official list as published by Exophase and PSNProfiles; hidden flags follow the 28 hidden trophies listed by EGamers and Insider Gaming. Every guide is written in our own words and names its sources beside it. No Rockstar artwork is used. This guide is offline: it loads only its own files.</p>
+  </footer>
 </main>
-
-<footer class="foot" id="foot">
-  <p>Leonida Legend — an offline, open-source GTA 6 trophy guide and tracker. No network needed; all data lives in this app's own files.</p>
-</footer>
-
-<script src="app.js"></script>
+<script type="module" src="app.js"></script>
 </body>
 </html>

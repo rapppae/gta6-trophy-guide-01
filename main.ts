@@ -1,56 +1,46 @@
-import { copyFileSync, existsSync, mkdirSync, readdirSync, rmSync, statSync, writeFileSync } from "node:fs";
-import { dirname, join } from "node:path";
-import { fileURLToPath } from "node:url";
-import { buildDossier } from "./vendor/makefun-frontend.ts";
+// Leonida Platinum Path — a GTA 6 trophy guide and tracker for make.fun's
+// gta6-trophy-guide-01 bounty. The guide itself is app/: plain static files
+// (index.html, app.js, style.css, data/trophies.json) that open in a desktop
+// browser and work offline. This program hands it in: it copies app/ and
+// screenshots/ from beside this file to the output directory and writes
+// dossier.json there with the vendored make.fun library. Leave
+// vendor/makefun-frontend.ts as it is: the scorer requires dossier.json to
+// be byte for byte what its own copy writes.
+//
+// Run it outside the grader with:
+//   mkdir -p out && MAKEFUN_OUTPUT_DIR=out node main.ts
 
-const REPO_ROOT = dirname(fileURLToPath(import.meta.url));
-const OUTPUT_DIR = process.env.MAKEFUN_OUTPUT_DIR || "/output";
+import { cpSync, existsSync, mkdirSync, statSync, writeFileSync } from 'node:fs';
+import { join } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { buildDossier } from './vendor/makefun-frontend.ts';
 
-const DOSSIER_CAPS = {
-  text_max_bytes: 163840,
-  screenshots: { max: 4, max_bytes: 262144 },
-  app_max_files: 993,
-  app_max_bytes: 50331648,
-};
+const here = fileURLToPath(new URL('.', import.meta.url));
+const out = process.env.MAKEFUN_OUTPUT_DIR ?? '/output';
 
-function copyTree(sourceDir: string, targetDir: string): number {
-  mkdirSync(targetDir, { recursive: true });
-  let copied = 0;
-  for (const entry of readdirSync(sourceDir, { withFileTypes: true })) {
-    const from = join(sourceDir, entry.name);
-    const to = join(targetDir, entry.name);
-    if (entry.isDirectory()) {
-      copied += copyTree(from, to);
-    } else if (entry.isFile()) {
-      copyFileSync(from, to);
-      copied += 1;
-    }
-  }
-  return copied;
+const appDir = join(here, 'app');
+const shotsDir = join(here, 'screenshots');
+if (!existsSync(appDir) || !statSync(appDir).isDirectory()) {
+  console.error('main.ts: app/ is missing beside main.ts — nothing to hand in.');
+  process.exit(1);
+}
+if (!existsSync(shotsDir) || !statSync(shotsDir).isDirectory()) {
+  console.error('main.ts: screenshots/ is missing beside main.ts — take 3 or 4 screenshots first.');
+  process.exit(1);
 }
 
-function handIn(): void {
-  const appDir = join(REPO_ROOT, "app");
-  const shotsDir = join(REPO_ROOT, "screenshots");
-  if (!existsSync(appDir) || !statSync(appDir).isDirectory()) {
-    throw new Error("app/ is missing from the repository root: " + appDir);
-  }
-  if (!existsSync(shotsDir) || !statSync(shotsDir).isDirectory()) {
-    throw new Error("screenshots/ is missing from the repository root: " + shotsDir);
-  }
-  rmSync(OUTPUT_DIR, { recursive: true, force: true });
-  mkdirSync(OUTPUT_DIR, { recursive: true });
-  const appFiles = copyTree(appDir, join(OUTPUT_DIR, "app"));
-  const shotFiles = copyTree(shotsDir, join(OUTPUT_DIR, "screenshots"));
-  if (appFiles === 0) throw new Error("app/ has no files to hand in.");
-  if (shotFiles < 3 || shotFiles > 4) {
-    throw new Error("screenshots/ must hold 3 or 4 images, found " + shotFiles + ".");
-  }
-  const dossier = buildDossier(OUTPUT_DIR, DOSSIER_CAPS);
-  if (dossier.length === 0) throw new Error("buildDossier wrote an empty dossier.");
-  const dossierPath = join(OUTPUT_DIR, "dossier.json");
-  writeFileSync(dossierPath, dossier);
-  console.log("Wrote " + dossierPath + " (" + dossier.length + " bytes) from " + appFiles + " app files and " + shotFiles + " screenshots.");
-}
+mkdirSync(out, { recursive: true });
+cpSync(appDir, join(out, 'app'), { recursive: true });
+mkdirSync(join(out, 'screenshots'), { recursive: true });
+cpSync(shotsDir, join(out, 'screenshots'), { recursive: true });
 
-handIn();
+let dossier;
+try {
+  dossier = buildDossier(out, { text_max_bytes: 163840, screenshots: { max: 4, max_bytes: 262144 }, app_max_files: 993, app_max_bytes: 50331648 });
+} catch (err) {
+  console.error('main.ts: buildDossier refused the entry: ' + (err instanceof Error ? err.message : String(err)));
+  process.exit(1);
+}
+const target = join(out, 'dossier.json');
+writeFileSync(target, dossier);
+console.log('main.ts: wrote ' + target + ' (' + statSync(target).size + ' bytes)');
